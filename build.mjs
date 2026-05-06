@@ -25,7 +25,7 @@ const libraryBuild = {
   ...shared,
   format: "esm",
   outfile: "dist/puzzmo-stats.js",
-  external: ["lit", "lit/*"],
+  external: ["lit", "lit/*", "@lit/task", "@lit/task/*"],
 };
 
 const demoBuild = {
