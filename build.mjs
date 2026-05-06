@@ -1,5 +1,7 @@
 import * as esbuild from "esbuild";
-import pkg from "./package.json" assert { type: "json" };
+import { readFile } from "node:fs/promises";
+
+const pkg = JSON.parse(await readFile("package.json", "utf8"));
 
 const watch = process.argv.includes("--watch");
 
