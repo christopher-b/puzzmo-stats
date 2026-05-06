@@ -20,6 +20,8 @@ npm install
 
 ## Usage
 
+See [the demo](./demo/index.html) for an example.
+
 Import the component once in your application entrypoint:
 
 ```ts
