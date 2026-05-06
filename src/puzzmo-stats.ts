@@ -12,19 +12,16 @@ export class PuzzmoStats extends LitElement {
       --puzzmo-stats-spacing: 1rem;
       --puzzmo-stats-font-size-stat: 2rem;
       --puzzmo-stats-font-display: inherit;
-      --puzzmo-stats-text-label: #666;
+      --puzzmo-stats-label-color: #666;
       --puzzmo-stats-border-color: #d8d8d8;
       --puzzmo-stats-icon-size: 28px;
+      --puzzmo-stats-icon-foreground: #141620;
+      --puzzmo-stats-icon-background: #ececec;
 
       display: block;
     }
 
-    .puzzmo-stats ul {
-      list-style: none;
-      padding: 0;
-    }
-
-    .puzzmo-stats h1 {
+    h1 {
       position: absolute;
       left: -10000px;
       top: auto;
@@ -33,11 +30,33 @@ export class PuzzmoStats extends LitElement {
       overflow: hidden;
     }
 
-    .puzzmo-stats h2 {
+    h2 {
+      display: flex;
       margin-block: 0;
+      align-items: center;
+      gap: calc(var(--puzzmo-stats-spacing) / 2);
     }
 
-    .puzzmo-stats header {
+    h2 img {
+      display: inline;
+      inline-size: var(--puzzmo-stats-icon-size);
+      block-size: var(--puzzmo-stats-icon-size);
+      vertical-align: middle;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    li:not(:last-child) {
+      border-bottom: thin solid var(--puzzmo-stats-border-color);
+      padding-bottom: var(--puzzmo-stats-spacing);
+      margin-bottom: var(--puzzmo-stats-spacing);
+    }
+
+    li header {
       display: flex;
       justify-content: space-between;
       margin-bottom: var(--puzzmo-stats-spacing);
@@ -45,43 +64,30 @@ export class PuzzmoStats extends LitElement {
       align-items: center;
     }
 
-    .last-played {
+    li header p {
       text-align: right;
-      color: var(--puzzmo-stats-text-label);
+      color: var(--puzzmo-stats-color-label);
       margin: 0;
     }
 
-    .puzzmo-stats li:not(:last-child) {
-      border-bottom: thin solid var(--puzzmo-stats-border-color);
-      padding-bottom: var(--puzzmo-stats-spacing);
-      margin-bottom: var(--puzzmo-stats-spacing);
-    }
-
-    .puzzmo-stats h2 img {
-      display: inline;
-      inline-size: var(--puzzmo-stats-icon-size);
-      block-size: var(--puzzmo-stats-icon-size);
-      vertical-align: middle;
-    }
-
-    .puzzmo-stats dl {
+    dl {
       display: flex;
       justify-content: space-between;
       gap: var(--puzzmo-stats-spacing);
       margin: 0;
     }
 
-    .puzzmo-stats dl div {
+    dl div {
       display: flex;
       flex-direction: column-reverse;
       text-align: center;
     }
 
-    .puzzmo-stats dt {
-      color: var(--puzzmo-stats-text-label);
+    dt {
+      color: var(--puzzmo-stats-color-label);
     }
 
-    .puzzmo-stats dd {
+    dd {
       font-size: var(--puzzmo-stats-font-size-stat);
       font-family: var(--puzzmo-stats-font-display);
       line-height: 0.9;
@@ -95,7 +101,14 @@ export class PuzzmoStats extends LitElement {
   private readonly streaksTask = new Task<[string], PuzzmoStreak[]>(this, {
     task: async ([handle]) => listPuzzmoStreaks(handle),
     args: () => [this.handle],
+    autoRun: false,
   });
+
+  protected willUpdate(changedProperties: Map<PropertyKey, unknown>) {
+    if (changedProperties.has("handle") && this.handle.trim()) {
+      void this.streaksTask.run();
+    }
+  }
 
   render() {
     const isLoading = this.streaksTask.status === TaskStatus.PENDING;
@@ -107,28 +120,30 @@ export class PuzzmoStats extends LitElement {
         aria-busy=${isLoading}
         aria-labelledby="puzzmo-stats-heading"
       >
-        <h1 id="puzzmo-stats-heading">My Puzzmo Stats</h2>
+        <h1 id="puzzmo-stats-heading">My Puzzmo Stats</h1>
         ${this.streaksTask.render({
           initial: () => this.renderInitialState(),
           pending: () => this.renderLoadingState(),
           error: (error) => this.renderErrorState(error),
           complete: (streaks) => this.renderStreaks(streaks),
         })}
-      </section>
+      </article>
     `;
   }
 
   private renderInitialState() {
-    return this.handle ? nothing : html`<p>Add a handle to load stats.</p>`;
+    return this.handle
+      ? nothing
+      : html`<p>Add an ATProto handle to load Puzzmo stats.</p>`;
   }
 
   private renderLoadingState() {
-    return html`<p>Loading stats for ${this.handle}...</p>`;
+    return html`<p>Loading Puzzmo stats for ${this.handle}...</p>`;
   }
 
   private renderErrorState(error: unknown) {
     return html`<p>
-      Error loading stats for ${this.handle}: ${String(error)}
+      Could not load stats for ${this.handle}: ${String(error)}
     </p>`;
   }
 
@@ -147,6 +162,8 @@ export class PuzzmoStats extends LitElement {
   private renderStreak(streak: PuzzmoStreak) {
     const colorScheme = getPreferredColorScheme();
     const styles = getComputedStyle(this);
+    const size =
+      parseInt(styles.getPropertyValue("--puzzmo-stats-icon-size")) || 28;
     const foreground =
       styles.getPropertyValue("--puzzmo-stats-icon-foreground") ||
       colorScheme.foreground;
@@ -157,13 +174,14 @@ export class PuzzmoStats extends LitElement {
       slug: streak.gameSlug,
       foreground,
       background,
+      size,
     });
 
     return html`
       <li>
         <header>
           <h2>
-            <img src=${iconUrl} alt="" width="28" height="28" />
+            <img src=${iconUrl} alt="" width=${size} height=${size} />
             ${streak.gameDisplayName}
           </h2>
           <p class="last-played">

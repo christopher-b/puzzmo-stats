@@ -22,7 +22,7 @@ export function getGameIconUrl({
   slug,
   foreground,
   background,
-  size = 28,
+  size = 24,
 }: {
   slug: string;
   foreground: string;
