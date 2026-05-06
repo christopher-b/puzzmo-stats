@@ -9,7 +9,7 @@ A Lit-based web component for displaying Puzzmo streak stats from ATProto record
 Install the package and its peer dependency:
 
 ```sh
-npm install puzzmo-stats lit
+npm install puzzmo-stats lit @lit/task
 ```
 
 For local development in this repository:
