@@ -1,25 +1,31 @@
 import * as esbuild from "esbuild";
 import pkg from "./package.json" assert { type: "json" };
 
-const peerDeps = Object.keys(pkg.peerDependencies || {});
 const watch = process.argv.includes("--watch");
+
+// Automatically externalize all peer dependencies and subpaths
+const peerDeps = Object.keys(pkg.peerDependencies || {});
+const external = [...peerDeps, ...peerDeps.map((d) => `${d}/*`)];
 
 const shared = {
   entryPoints: ["src/index.ts"],
   bundle: true,
   sourcemap: true,
-  target: "es2022",
+  target: ["es2022"],
   platform: "browser",
+  logLevel: "info",
 };
 
-const libraryBuild = {
+// ---- ESM library build (for bundlers) ----
+const esm = {
   ...shared,
   format: "esm",
   outfile: "dist/puzzmo-stats.js",
-  external: peerDeps,
+  external,
 };
 
-const demoBuild = {
+// ---- Dev build (for demo page) ----
+const dev = {
   ...shared,
   format: "esm",
   outfile: "dist/puzzmo-stats.dev.js",
@@ -28,7 +34,8 @@ const demoBuild = {
   },
 };
 
-const iifeBuild = {
+// ---- IIFE build (for <script> usage) ----
+const iife = {
   ...shared,
   format: "iife",
   sourcemap: false,
@@ -63,13 +70,13 @@ if (watch) {
     });
   }
 
-  console.log(`dev server running at http://localhost:${server.port}/demo/`);
+  console.log(`Dev server running at http://localhost:${server.port}/demo/`);
 } else {
   await Promise.all([
-    esbuild.build(libraryBuild),
-    esbuild.build(demoBuild),
-    esbuild.build(iifeBuild),
+    esbuild.build(esm),
+    esbuild.build(dev),
+    esbuild.build(iffe),
   ]);
 
-  console.log("build complete");
+  console.log("✔ Build complete");
 }

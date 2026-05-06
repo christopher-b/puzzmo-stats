@@ -17,6 +17,7 @@
   "files": [
     "dist"
   ],
+  "sideEffects": false,
   "scripts": {
     "build": "npm run clean && node build.mjs && tsc --emitDeclarationOnly",
     "check": "npm run typecheck && npm test && npm run build",
