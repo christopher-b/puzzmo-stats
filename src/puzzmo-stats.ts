@@ -19,13 +19,22 @@ export class PuzzmoStats extends LitElement {
       display: block;
     }
 
-    .puzzmo-stats {
+    .puzzmo-stats ul {
       list-style: none;
       padding: 0;
     }
 
+    .puzzmo-stats h1 {
+      position: absolute;
+      left: -10000px;
+      top: auto;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+    }
+
     .puzzmo-stats h2 {
-      margin-block-start: 0;
+      margin-block: 0;
     }
 
     .puzzmo-stats header {
@@ -92,12 +101,13 @@ export class PuzzmoStats extends LitElement {
     const isLoading = this.streaksTask.status === TaskStatus.PENDING;
 
     return html`
-      <section
+      <article
+        class="puzzmo-stats"
         aria-live="polite"
         aria-busy=${isLoading}
         aria-labelledby="puzzmo-stats-heading"
       >
-        <h2 id="puzzmo-stats-heading">My Puzzmo Stats</h2>
+        <h1 id="puzzmo-stats-heading">My Puzzmo Stats</h2>
         ${this.streaksTask.render({
           initial: () => this.renderInitialState(),
           pending: () => this.renderLoadingState(),
@@ -128,7 +138,7 @@ export class PuzzmoStats extends LitElement {
     }
 
     return html`
-      <ul class="puzzmo-stats" data-puzzmo-stats>
+      <ul>
         ${streaks.map((streak) => this.renderStreak(streak))}
       </ul>
     `;

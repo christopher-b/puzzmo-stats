@@ -4,10 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Puzzmo Stats Demo</title>
+    <link rel="preconnect" href="https://rsms.me/">
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+
+    <style>
+      :root {
+        font-family: Inter, sans-serif;
+        font-feature-settings:
+          "liga" 1,
+          "calt" 1; /* fix for Chrome */
+      }
+      @supports (font-variation-settings: normal) {
+        :root {
+          font-family: InterVariable, sans-serif;
+        }
+      }
+
+      .puzzmo-container {
+        max-width: 45ch;
+      }
+    </style>
   </head>
   <body>
     <h1>Puzzmo Stats Demo</h1>
-    <puzzmo-stats handle="cbennell.com"></puzzmo-stats>
+
+    <div class="puzzmo-container">
+      <puzzmo-stats handle="cbennell.com"></puzzmo-stats>
+    </div>
 
     <script type="module">
       new EventSource("/esbuild").addEventListener("change", () =>

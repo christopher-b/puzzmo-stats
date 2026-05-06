@@ -47,9 +47,9 @@ The IIFE bundle includes Lit and `@lit/task`. The ESM package build keeps those 
 
 ### Attributes
 
-| Attribute | Property | Type | Required | Description |
-| --- | --- | --- | --- | --- |
-| `handle` | `handle` | `string` | Yes | ATProto handle used to resolve and load Puzzmo streak records. |
+| Attribute | Property | Type     | Required | Description                                                    |
+| --------- | -------- | -------- | -------- | -------------------------------------------------------------- |
+| `handle`  | `handle` | `string` | Yes      | ATProto handle used to resolve and load Puzzmo streak records. |
 
 ### JavaScript Property
 
@@ -83,17 +83,16 @@ Icon color values may include or omit the leading `#`. If icon colors are not se
 
 The component also falls back to these app-level design tokens when present:
 
-| Component Variable | App Token Fallback | Default |
-| --- | --- | --- |
-| `--puzzmo-stats-spacing` | `--s0` | `1rem` |
-| `--puzzmo-stats-font-size-xs` | `--font-xs` | `0.8125rem` |
-| `--puzzmo-stats-font-size-xl` | `--font-xl` | `2rem` |
-| `--puzzmo-stats-font-display` | `--font-display` | `inherit` |
-| `--puzzmo-stats-text-muted` | `--text-color-muted` | `#666` |
-| `--puzzmo-stats-border-color` | `--color-border` | `#d8d8d8` |
-| `--puzzmo-stats-icon-size` | None | `28px` |
-| `--puzzmo-stats-icon-foreground` | None | Light/dark scheme dependent |
-| `--puzzmo-stats-icon-background` | None | Light/dark scheme dependent |
+| Component Variable               | Default                     |
+| -------------------------------- | --------------------------- |
+| `--puzzmo-stats-spacing`         | `1rem`                      |
+| `--puzzmo-stats-font-size-stat`  | `2rem`                      |
+| `--puzzmo-stats-font-display`    | `inherit`                   |
+| `--puzzmo-stats-text-label`      | `#666`                      |
+| `--puzzmo-stats-border-color`    | `#d8d8d8`                   |
+| `--puzzmo-stats-icon-size`       | `28px`                      |
+| `--puzzmo-stats-icon-foreground` | Light/dark scheme dependent |
+| `--puzzmo-stats-icon-background` | Light/dark scheme dependent |
 
 ## Development
 
@@ -121,13 +120,13 @@ npm run build
 
 Build outputs:
 
-| File | Purpose |
-| --- | --- |
-| `dist/puzzmo-stats.js` | ESM package build with `lit` and `@lit/task` externalized. |
-| `dist/puzzmo-stats.dev.js` | Bundled ESM build for the local demo page. |
-| `dist/puzzmo-stats.iife.min.js` | Bundled/minified script build for direct browser usage. |
-| `dist/*.d.ts` | TypeScript declaration files. |
-| `dist/*.map` | Source maps and declaration maps. |
+| File                            | Purpose                                                    |
+| ------------------------------- | ---------------------------------------------------------- |
+| `dist/puzzmo-stats.js`          | ESM package build with `lit` and `@lit/task` externalized. |
+| `dist/puzzmo-stats.dev.js`      | Bundled ESM build for the local demo page.                 |
+| `dist/puzzmo-stats.iife.min.js` | Bundled/minified script build for direct browser usage.    |
+| `dist/*.d.ts`                   | TypeScript declaration files.                              |
+| `dist/*.map`                    | Source maps and declaration maps.                          |
 
 Run all checks:
 
@@ -141,13 +140,13 @@ npm run check
 
 The source is split by responsibility:
 
-| File | Responsibility |
-| --- | --- |
-| `src/puzzmo-stats.ts` | Lit custom element and rendering. |
+| File                    | Responsibility                                                       |
+| ----------------------- | -------------------------------------------------------------------- |
+| `src/puzzmo-stats.ts`   | Lit custom element and rendering.                                    |
 | `src/puzzmo-streaks.ts` | Puzzmo streak record loading, filtering, sorting, and normalization. |
-| `src/puzzmo-icons.ts` | Puzzmo icon URL and color-scheme helpers. |
-| `src/format.ts` | Display formatting helpers. |
-| `src/lib/atproto.ts` | ATProto handle, PDS, and record APIs. |
+| `src/puzzmo-icons.ts`   | Puzzmo icon URL and color-scheme helpers.                            |
+| `src/format.ts`         | Display formatting helpers.                                          |
+| `src/lib/atproto.ts`    | ATProto handle, PDS, and record APIs.                                |
 
 ## Browser Support
 
