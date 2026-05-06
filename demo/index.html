@@ -9,44 +9,131 @@
 
     <style>
       :root {
+        color-scheme: light dark;
         font-family: Charter, "Bitstream Charter", "Sitka Text", Cambria, serif;
+        font-size: 1.125rem;
+        line-height: 1.55;
+      }
+
+      body {
+        margin: 0;
+        padding: clamp(1rem, 4vw, 3rem);
+      }
+
+      .examples {
+        display: flex;
+        gap: 2rem;
+        max-width: 72rem;
+        margin-inline: auto;
+      }
+
+      h1,
+      h2 {
+        line-height: 1.05;
+      }
+
+      h1 {
+        font-family: InterVariable, Inter, sans-serif;
         font-feature-settings:
           "liga" 1,
           "calt" 1;
-        font-size: 1.25rem;
+        font-size: clamp(1.75rem, 8vw, 5rem);
+        letter-spacing: -0.06em;
+        margin-block: 0 1rem;
       }
 
-      .puzzmo-container {
-        max-width: 45ch;
-        border: thin solid #333;
+      h2 {
+        margin-block: 0 0.75rem;
+      }
+
+      .demo-card {
+        border: thin solid light-dark(#333, #cfcfcf);
         border-radius: 10px;
         padding: 1rem;
       }
 
       puzzmo-stats {
         --puzzmo-stats-font-display: InterVariable, Inter, sans-serif;
+        --puzzmo-stats-icon-foreground: #141620;
+        --puzzmo-stats-icon-background: #ececec;
+      }
+
+      pre {
+        overflow-x: auto;
+        border: thin solid light-dark(#d8d8d8, #3a3a3a);
+        border-radius: 10px;
+        padding: 1rem;
+        background: light-dark(#f6f6f6, #181818);
+        font-size: 0.875rem;
+        line-height: 1.45;
+      }
+
+      code {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
       }
     </style>
   </head>
   <body>
-    <h1>Puzzmo Stats Demo</h1>
-    <p>
-      This is a demo of the `puzzmo-stats` web component. It loads Puzzmo streak
-      stats from ATProto records.
-    </p>
-    <p>
-      For this to work, you must have your Puzzmo account connected to your
-      ATProto (Bluesky) account.
-    </p>
+    <main>
+      <section class="intro">
+        <h1>Puzzmo Stats Demo</h1>
+        <p>
+          This page demonstrates the <code>puzzmo-stats</code>
+          <a href="https://github.com/christopher-b/puzzmo-stats">
+            web component </a
+          >. It loads Puzzmo streak stats from ATProto records. For this to
+          work, the Puzzmo account must be connected to the provided ATProto or
+          Bluesky handle.
+        </p>
+      </section>
 
-    <div class="puzzmo-container">
-      <puzzmo-stats handle="cbennell.com"></puzzmo-stats>
-    </div>
+      <section class="examples" aria-labelledby="examples-heading">
+        <div class="demo-card">
+          <puzzmo-stats handle="cbennell.com"></puzzmo-stats>
+        </div>
+
+        <div>
+          <h2 id="examples-heading">Code Used For This Demo</h2>
+
+          <article>
+            <h3>HTML</h3>
+            <pre><code>&lt;div class="demo-card"&gt;
+  &lt;puzzmo-stats handle="cbennell.com"&gt;&lt;/puzzmo-stats&gt;
+&lt;/div&gt;</code></pre>
+          </article>
+
+          <article>
+            <h3>JavaScript</h3>
+            <pre><code>&lt;script type="module" src="../dist/puzzmo-stats.dev.js"&gt;&lt;/script&gt;</code></pre>
+          </article>
+
+          <article>
+            <h3>CSS</h3>
+            <pre><code>.demo-card {
+  border: thin solid light-dark(#333, #cfcfcf);
+  border-radius: 10px;
+  padding: 1rem;
+}
+
+puzzmo-stats {
+  --puzzmo-stats-font-display: InterVariable, Inter, sans-serif;
+  --puzzmo-stats-icon-foreground: #141620;
+  --puzzmo-stats-icon-background: #ececec;
+}</code></pre>
+          </article>
+        </div>
+      </section>
+    </main>
 
     <script type="module">
-      new EventSource("/esbuild").addEventListener("change", () =>
-        location.reload(),
-      );
+      if (
+        location.hostname === "localhost" ||
+        location.hostname === "127.0.0.1"
+      ) {
+        new EventSource("/esbuild").addEventListener("change", () =>
+          location.reload(),
+        );
+      }
     </script>
     <script type="module" src="../dist/puzzmo-stats.dev.js"></script>
   </body>

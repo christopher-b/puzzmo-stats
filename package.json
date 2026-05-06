@@ -1,6 +1,6 @@
 {
   "name": "puzzmo-stats",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "Display Puzzmo streak stats, loaded with ATProto",
   "license": "ISC",
   "author": "Christopher Bennell",
