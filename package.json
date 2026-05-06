@@ -5,7 +5,7 @@
   "license": "ISC",
   "author": "Christopher Bennell",
   "type": "module",
-  "main": "./dist/puzzmo-stats.js",
+  "main": "./dist/puzzmo-stats.iife.min.js",
   "module": "./dist/puzzmo-stats.js",
   "types": "./dist/puzzmo-stats.d.ts",
   "exports": {

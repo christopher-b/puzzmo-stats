@@ -1,9 +1,9 @@
 import { Task, TaskStatus } from "@lit/task";
 import { LitElement, css, html, nothing } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import { formatDate } from "./format.js";
-import { getGameIconUrl, getPreferredColorScheme } from "./puzzmo-icons.js";
-import { listPuzzmoStreaks, type PuzzmoStreak } from "./puzzmo-streaks.js";
+import { formatDate } from "./format";
+import { getGameIconUrl, getPreferredColorScheme } from "./puzzmo-icons";
+import { listPuzzmoStreaks, type PuzzmoStreak } from "./puzzmo-streaks";
 
 @customElement("puzzmo-stats")
 export class PuzzmoStats extends LitElement {
@@ -121,6 +121,7 @@ export class PuzzmoStats extends LitElement {
         aria-labelledby="puzzmo-stats-heading"
       >
         <h1 id="puzzmo-stats-heading">My Puzzmo Stats</h1>
+        <slot>
         ${this.streaksTask.render({
           initial: () => this.renderInitialState(),
           pending: () => this.renderLoadingState(),

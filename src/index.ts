@@ -1,1 +1,1 @@
-export { PuzzmoStats } from "./puzzmo-stats.js";
+export { PuzzmoStats } from "./puzzmo-stats";

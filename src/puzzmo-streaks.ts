@@ -2,7 +2,7 @@ import {
   getAtprotoRecordKey,
   listRecordsForHandle,
   type AtprotoRecord,
-} from "./lib/atproto.js";
+} from "./lib/atproto";
 
 export type PuzzmoStreakRecord = AtprotoRecord & {
   current?: number;

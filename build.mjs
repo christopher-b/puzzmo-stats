@@ -1,52 +1,47 @@
 import * as esbuild from "esbuild";
-import { createRequire } from "node:module";
+import pkg from "./package.json" assert { type: "json" };
 
-const require = createRequire(import.meta.url);
-
+const peerDeps = Object.keys(pkg.peerDependencies || {});
 const watch = process.argv.includes("--watch");
-
-const localNodeModulesPlugin = {
-  name: "local-node-modules",
-  setup(build) {
-    build.onResolve({ filter: /^[^./]|^@/ }, (args) => ({
-      path: require.resolve(args.path, { paths: [process.cwd()] }),
-    }));
-  },
-};
 
 const shared = {
   entryPoints: ["src/index.ts"],
   bundle: true,
   sourcemap: true,
   target: "es2022",
+  platform: "browser",
 };
 
 const libraryBuild = {
   ...shared,
   format: "esm",
   outfile: "dist/puzzmo-stats.js",
-  external: ["lit", "lit/*", "@lit/task", "@lit/task/*"],
+  external: peerDeps,
 };
 
 const demoBuild = {
   ...shared,
   format: "esm",
   outfile: "dist/puzzmo-stats.dev.js",
-  plugins: [localNodeModulesPlugin],
+  define: {
+    "process.env.NODE_ENV": '"development"',
+  },
 };
 
 const iifeBuild = {
   ...shared,
   format: "iife",
+  sourcemap: false,
   globalName: "PuzzmoStats",
   outfile: "dist/puzzmo-stats.iife.min.js",
   minify: true,
-  plugins: [localNodeModulesPlugin],
+  define: {
+    "process.env.NODE_ENV": '"production"',
+  },
 };
 
 if (watch) {
   const ctx = await esbuild.context(demoBuild);
-
   await ctx.watch();
 
   const requestedPort = Number(process.env.PORT ?? 3000);
@@ -68,9 +63,13 @@ if (watch) {
     });
   }
 
-  console.log(`dev server running at http://${server.host ?? "localhost"}:${server.port}/demo/`);
+  console.log(`dev server running at http://localhost:${server.port}/demo/`);
 } else {
-  await Promise.all([esbuild.build(libraryBuild), esbuild.build(demoBuild), esbuild.build(iifeBuild)]);
+  await Promise.all([
+    esbuild.build(libraryBuild),
+    esbuild.build(demoBuild),
+    esbuild.build(iifeBuild),
+  ]);
 
   console.log("build complete");
 }
