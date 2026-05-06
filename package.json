@@ -1,0 +1,39 @@
+{
+  "name": "puzzmo-stats",
+  "version": "0.1.0",
+  "description": "Display Puzzmo streak stats, loaded with ATProto",
+  "license": "ISC",
+  "author": "Christopher Bennell",
+  "type": "module",
+  "main": "./dist/puzzmo-stats.js",
+  "module": "./dist/puzzmo-stats.js",
+  "types": "./dist/puzzmo-stats.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/puzzmo-stats.d.ts",
+      "import": "./dist/puzzmo-stats.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "npm run clean && node build.mjs && tsc --emitDeclarationOnly",
+    "check": "npm run typecheck && npm run build",
+    "dev": "node build.mjs --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "npm run typecheck",
+    "clean": "rm -rf dist"
+  },
+  "peerDependencies": {
+    "lit": "^3.3.2"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.0",
+    "lit": "^3.3.2",
+    "typescript": "^6.0.3"
+  },
+  "dependencies": {
+    "@lit/task": "^1.0.3"
+  }
+}

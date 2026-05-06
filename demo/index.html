@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Puzzmo Stats Demo</title>
+  </head>
+  <body>
+    <h1>Puzzmo Stats Demo</h1>
+    <puzzmo-stats handle="cbennell.com"></puzzmo-stats>
+
+    <script type="module">
+      new EventSource("/esbuild").addEventListener("change", () =>
+        location.reload(),
+      );
+    </script>
+    <script type="module" src="../dist/puzzmo-stats.dev.js"></script>
+  </body>
+</html>
