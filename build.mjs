@@ -30,7 +30,7 @@ const dev = {
   format: "esm",
   outfile: "dist/puzzmo-stats.dev.js",
   define: {
-    "process.env.NODE_ENV": '"development"',
+    "process.env.NODE_ENV": "development",
   },
 };
 
@@ -48,7 +48,7 @@ const iife = {
 };
 
 if (watch) {
-  const ctx = await esbuild.context(demoBuild);
+  const ctx = await esbuild.context(dev);
   await ctx.watch();
 
   const requestedPort = Number(process.env.PORT ?? 3000);
@@ -75,7 +75,7 @@ if (watch) {
   await Promise.all([
     esbuild.build(esm),
     esbuild.build(dev),
-    esbuild.build(iffe),
+    esbuild.build(iife),
   ]);
 
   console.log("✔ Build complete");
