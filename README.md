@@ -2,6 +2,8 @@
 
 A Lit-based web component for displaying Puzzmo streak stats from ATProto records.
 
+[Learn more](https://blog.puzzmo.com/posts/2026/03/02/bsky/) about Puzzmo's ATProto integration
+
 ## Installation
 
 Install the package and its peer dependency:
@@ -43,6 +45,14 @@ The package build includes an IIFE bundle for direct script usage:
 
 The IIFE bundle includes Lit and `@lit/task`. The ESM package build keeps those dependencies external.
 
+## Todo
+
+- Add further visual customization with CSS custom properties
+- Allow users to exclude certain games
+- Customize date format
+- Allow initialization with DID/PDS to save requests
+- Compare mode: show sttats for two users
+
 ## Configuration
 
 ### Attributes
@@ -51,16 +61,6 @@ The IIFE bundle includes Lit and `@lit/task`. The ESM package build keeps those 
 | --------- | -------- | -------- | -------- | -------------------------------------------------------------- |
 | `handle`  | `handle` | `string` | Yes      | ATProto handle used to resolve and load Puzzmo streak records. |
 
-### JavaScript Property
-
-```ts
-const stats = document.querySelector("puzzmo-stats");
-
-if (stats) {
-  stats.handle = "cbennell.com";
-}
-```
-
 ## Styling
 
 The component ships with default shadow-DOM styles. Consumers can customize supported styling hooks with CSS custom properties applied to the host element.
@@ -68,10 +68,9 @@ The component ships with default shadow-DOM styles. Consumers can customize supp
 ```css
 puzzmo-stats {
   --puzzmo-stats-spacing: 1rem;
-  --puzzmo-stats-font-size-xs: 0.8125rem;
-  --puzzmo-stats-font-size-xl: 2rem;
+  --puzzmo-stats-font-size-stat: 2rem;
   --puzzmo-stats-font-display: Georgia, serif;
-  --puzzmo-stats-text-muted: #666;
+  --puzzmo-stats-color-label: #666;
   --puzzmo-stats-border-color: #d8d8d8;
   --puzzmo-stats-icon-size: 28px;
   --puzzmo-stats-icon-foreground: #141620;
@@ -88,7 +87,7 @@ The component also falls back to these app-level design tokens when present:
 | `--puzzmo-stats-spacing`         | `1rem`                      |
 | `--puzzmo-stats-font-size-stat`  | `2rem`                      |
 | `--puzzmo-stats-font-display`    | `inherit`                   |
-| `--puzzmo-stats-text-label`      | `#666`                      |
+| `--puzzmo-stats-label-color`     | `#666`                      |
 | `--puzzmo-stats-border-color`    | `#d8d8d8`                   |
 | `--puzzmo-stats-icon-size`       | `28px`                      |
 | `--puzzmo-stats-icon-foreground` | Light/dark scheme dependent |
@@ -134,7 +133,30 @@ Run all checks:
 npm run check
 ```
 
-`npm run check` runs TypeScript typechecking and a full production build.
+`npm run check` runs TypeScript typechecking, the test suite, and a full production build.
+
+## Testing
+
+Run the test suite once:
+
+```sh
+npm test
+```
+
+Run tests in watch mode while developing:
+
+```sh
+npm run test:watch
+```
+
+Tests use Vitest with `happy-dom`. The current suite prioritizes low-maintenance coverage for the most important behavior:
+
+| Test File                     | Coverage                                                          |
+| ----------------------------- | ----------------------------------------------------------------- |
+| `test/format.test.ts`         | Date display formatting.                                          |
+| `test/puzzmo-icons.test.ts`   | Puzzmo icon URL generation and CSS-style hex color normalization. |
+| `test/puzzmo-streaks.test.ts` | Record loading behavior, filtering, sorting, and normalization.   |
+| `test/puzzmo-stats.test.ts`   | Custom-element registration and basic render states.              |
 
 ## Package Design
 
