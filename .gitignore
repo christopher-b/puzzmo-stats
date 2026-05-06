@@ -1,3 +1,5 @@
 node_modules/
 dist/
+demo/puzzmo-stats.dev.js
+demo/puzzmo-stats.dev.js.map
 .DS_Store

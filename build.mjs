@@ -30,9 +30,9 @@ const esm = {
 const dev = {
   ...shared,
   format: "esm",
-  outfile: "dist/puzzmo-stats.dev.js",
+  outfile: "demo/puzzmo-stats.dev.js",
   define: {
-    "process.env.NODE_ENV": "development",
+    "process.env.NODE_ENV": '"development"',
   },
 };
 

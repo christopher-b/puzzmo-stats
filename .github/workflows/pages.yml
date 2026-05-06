@@ -1,9 +1,7 @@
-name: Publish Demo
-
+name: Deploy static content to Pages
 on:
   push:
-    branches:
-      - main
+    branches: ["main"]
   workflow_dispatch:
 
 permissions:
@@ -24,6 +22,10 @@ jobs:
         with:
           node-version: "24"
           cache: npm
+      # npm 11.6.2+ has a known `npm ci` regression with optional architecture
+      # packages in existing lockfiles. Pin until GitHub's bundled npm includes
+      # npm/cli#8981 or later.
+      - run: npm install -g npm@11.6.1
       - run: npm ci
       - run: npm run check
       - run: mkdir -p pages/demo pages/dist
@@ -32,8 +34,7 @@ jobs:
       - uses: actions/configure-pages@v6
       - uses: actions/upload-pages-artifact@v4
         with:
-          path: pages
-
+          path: demo
   deploy:
     needs: build
     runs-on: ubuntu-latest
@@ -41,5 +42,6 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - id: deployment
-        uses: actions/deploy-pages@v6
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5

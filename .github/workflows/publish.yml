@@ -16,6 +16,10 @@ jobs:
           node-version: "24"
           registry-url: "https://registry.npmjs.org"
           package-manager-cache: false # never use caching in release builds
+      # npm 11.6.2+ has a known `npm ci` regression with optional architecture
+      # packages in existing lockfiles. Pin until GitHub's bundled npm includes
+      # npm/cli#8981 or later.
+      - run: npm install -g npm@11.6.1
       - run: npm ci
       - run: npm run build --if-present
       - run: npm test
