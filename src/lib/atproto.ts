@@ -10,12 +10,6 @@ type DidDocument = {
 
 export type AtprotoRecord = Record<string, unknown>;
 
-export type AtprotoPostRecord = AtprotoRecord & {
-  text?: string;
-  createdAt?: string;
-  reply?: unknown;
-};
-
 export type AtprotoListRecord<TRecord extends AtprotoRecord = AtprotoRecord> = {
   uri: string;
   value: TRecord;
@@ -108,43 +102,6 @@ export async function listRecordsForHandle<
   });
 
   return { did, records };
-}
-
-export async function listPostRecords({
-  handle,
-  limit = 50,
-}: {
-  handle: string;
-  limit?: number;
-}): Promise<{ did: string; records: AtprotoListRecord<AtprotoPostRecord>[] }> {
-  const did = await resolveDid(handle);
-  const pds = await resolvePds(did);
-  const records = await listRecords<AtprotoPostRecord>({
-    collection: "app.bsky.feed.post",
-    limit,
-    repo: did,
-    serviceEndpoint: pds,
-  });
-
-  return { did, records };
-}
-
-export function createBskyPostLink({
-  fallbackHandle,
-  did,
-  uri,
-}: {
-  fallbackHandle: string;
-  did: string;
-  uri: string;
-}): string {
-  const recordKey = uri.split("/").at(-1);
-
-  if (!recordKey) {
-    return `https://bsky.app/profile/${fallbackHandle}`;
-  }
-
-  return `https://bsky.app/profile/${did}/post/${recordKey}`;
 }
 
 export function getAtprotoRecordKey(uri: string): string {
