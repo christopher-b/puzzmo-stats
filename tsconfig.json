@@ -4,13 +4,15 @@
     "module": "ES2022",
     "moduleResolution": "Bundler",
     "lib": [
-      "ES2022",
+      "ES2023",
       "DOM",
       "DOM.Iterable"
     ],
     "rootDir": "./src",
     "outDir": "./dist",
-    "types": [],
+    "types": [
+      "vitest/globals"
+    ],
     "sourceMap": true,
     "declaration": true,
     "declarationMap": true,

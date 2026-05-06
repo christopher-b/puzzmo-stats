@@ -19,10 +19,11 @@
   ],
   "scripts": {
     "build": "npm run clean && node build.mjs && tsc --emitDeclarationOnly",
-    "check": "npm run typecheck && npm run build",
+    "check": "npm run typecheck && npm test && npm run build",
     "dev": "node build.mjs --watch",
     "typecheck": "tsc --noEmit",
-    "test": "npm run typecheck",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "clean": "rm -rf dist"
   },
   "peerDependencies": {
