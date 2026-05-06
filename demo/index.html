@@ -9,24 +9,35 @@
 
     <style>
       :root {
-        font-family: Inter, sans-serif;
+        font-family: Charter, "Bitstream Charter", "Sitka Text", Cambria, serif;
         font-feature-settings:
           "liga" 1,
-          "calt" 1; /* fix for Chrome */
-      }
-      @supports (font-variation-settings: normal) {
-        :root {
-          font-family: InterVariable, sans-serif;
-        }
+          "calt" 1;
+        font-size: 1.25rem;
       }
 
       .puzzmo-container {
         max-width: 45ch;
+        border: thin solid #333;
+        border-radius: 10px;
+        padding: 1rem;
+      }
+
+      puzzmo-stats {
+        --puzzmo-stats-font-display: InterVariable, Inter, sans-serif;
       }
     </style>
   </head>
   <body>
     <h1>Puzzmo Stats Demo</h1>
+    <p>
+      This is a demo of the `puzzmo-stats` web component. It loads Puzzmo streak
+      stats from ATProto records.
+    </p>
+    <p>
+      For this to work, you must have your Puzzmo account connected to your
+      ATProto (Bluesky) account.
+    </p>
 
     <div class="puzzmo-container">
       <puzzmo-stats handle="cbennell.com"></puzzmo-stats>
