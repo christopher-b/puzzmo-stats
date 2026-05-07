@@ -29,12 +29,12 @@ jobs:
       - run: npm ci
       - run: npm run check
       - run: mkdir -p pages/demo pages/dist
-      - run: cp demo/index.html pages/demo/index.html
-      - run: cp dist/puzzmo-stats.dev.js dist/puzzmo-stats.dev.js.map pages/dist/
+      - run: cp demo/index.html pages/index.html
+      - run: cp demo/puzzmo-stats.dev.js demo/puzzmo-stats.dev.js.map pages/
       - uses: actions/configure-pages@v6
       - uses: actions/upload-pages-artifact@v4
         with:
-          path: demo
+          path: pages
   deploy:
     needs: build
     runs-on: ubuntu-latest
