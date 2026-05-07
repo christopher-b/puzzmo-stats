@@ -2,6 +2,10 @@
   "name": "puzzmo-stats",
   "version": "0.1.2",
   "description": "Display Puzzmo streak stats, loaded with ATProto",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/christopher-b/puzzmo-stats"
+  },
   "license": "ISC",
   "author": "Christopher Bennell",
   "type": "module",
