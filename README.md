@@ -4,6 +4,8 @@ A Lit-based web component for displaying Puzzmo streak stats from ATProto record
 
 [Learn more](https://blog.puzzmo.com/posts/2026/03/02/bsky/) about Puzzmo's ATProto integration
 
+See [the demo](https://christopher-b.github.io/puzzmo-stats/) for an example.
+
 ## Installation
 
 Install the package and its peer dependency:
@@ -19,8 +21,6 @@ npm install
 ```
 
 ## Usage
-
-See [the demo](./demo/index.html) for an example.
 
 Import the component once in your application entrypoint:
 
